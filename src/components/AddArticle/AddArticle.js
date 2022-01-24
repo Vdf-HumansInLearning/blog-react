@@ -1,4 +1,5 @@
 import React from "react";
+import "./AddArticle.css";
 
 function AddArticle() {
   return (
