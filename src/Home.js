@@ -7,12 +7,12 @@ import Footer from "./components/Footer/Footer";
 //import Modal from "./components/Modal/Modal";
 
 const getArticles = (self) => {
-  fetch("http://localhost:3007/articles").then(function (response) {
+  fetch("http://localhost:3007/articles?indexStart=0&indexEnd=7").then(function (response) {
     response
       .json()
       .then(function (res) {
         if (response.status === 200) {
-          self.setState({ articles: res });
+          self.setState({ articles: res.articlesList });
           console.log(self.state);
         }
       })
@@ -43,17 +43,11 @@ class Home extends Component {
               page="home"
               key={article.id}
               id={article.id}
-              title={article.title}
-              author={article.author}
-              date={article.date}
-              imgUrl={article.imgUrl}
-              imgAlt={article.imgAlt}
-              content={article.content}
-              tag={article.tag}
+              article={article}
             ></Article>
           );
         })}
-        <Footer />
+        <Footer page="home"/>
       </>
     );
   }
