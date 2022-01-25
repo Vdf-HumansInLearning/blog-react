@@ -24,6 +24,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { articles: [] };
+    console.log(this.state);
   }
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class Home extends Component {
               imgUrl={article.imgUrl}
               imgAlt={article.imgAlt}
               content={article.content}
+              tag={article.tag}
             ></Article>
           );
         })}
