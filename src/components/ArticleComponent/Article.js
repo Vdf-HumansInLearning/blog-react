@@ -13,7 +13,7 @@ class Article extends Component {
       <div id={this.props.id}>
         <h2 className="title">{this.props.title}</h2>
         <ul className="info__container">
-          <li className="info__item">Destination Europe</li>
+          <li className="info__item">{this.props.tag}</li>
           <li className="info__item">
             Added by
             <span className="info__mark point">{this.props.author}</span>
