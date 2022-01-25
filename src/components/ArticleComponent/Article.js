@@ -1,7 +1,9 @@
 import React from "react";
 import "./Article.css";
 
-function Article() {
+function Article(props) {
+  const page= props.page;
+  console.log(page);
   return (
     <div id="fromServer">
       <h2 className="title">
@@ -46,7 +48,7 @@ function Article() {
           </p>
         </div>
         <div className="readmore__container">
-          <a className="btn-details" href="fromServer">
+          <a className="btn-details" href="/article/1">
             <button type="button" className="button button-details">
               Read More
             </button>

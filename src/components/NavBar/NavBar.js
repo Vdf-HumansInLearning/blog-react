@@ -8,7 +8,7 @@ function NavBar() {
       <ul className="nav__container">
         {navbarMenu.map((item, i) => (
           <li key={i} className="nav__item">
-            <a href="#" className="nav__link">
+            <a href="/" className="nav__link">
               {item}
             </a>
           </li>

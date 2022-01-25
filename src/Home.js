@@ -8,7 +8,7 @@ function Home() {
     <>
       <NavBar />
       <AddArticle />
-      <Article />
+      <Article page="home"/>
     </>
   );
 }
