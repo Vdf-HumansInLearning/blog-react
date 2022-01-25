@@ -22,7 +22,6 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = { article: null };
-    console.log(this.state);
   }
 
   componentDidMount() {
@@ -41,7 +40,7 @@ class Details extends Component {
             id={this.state.article.id}
             article={this.state.article}
           />
-          <Footer page="details"/>
+          <Footer page="details" prevArticle={this.state.article.prevId} nextArticle={this.state.article.nextId}/>
         </>
       );
     } else {
