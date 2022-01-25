@@ -3,6 +3,7 @@ import "./Home.css";
 import NavBar from "./components/NavBar/NavBar.js";
 import AddArticle from "./components/AddArticle/AddArticle";
 import Article from "./components/ArticleComponent/Article";
+import Footer from "./components/Footer/Footer";
 //import Modal from "./components/Modal/Modal";
 
 const getArticles = (self) => {
@@ -50,6 +51,7 @@ class Home extends Component {
             ></Article>
           );
         })}
+        <Footer />
       </>
     );
   }

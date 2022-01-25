@@ -57,10 +57,18 @@ function Modal(props) {
               placeholder="Please enter content"
             ></textarea>
             <div className="modal__buttons">
-              <button type="button" className="button close-modal">
+              <button
+                type="button"
+                className="button close-modal"
+                onClick={props.handler}
+              >
                 Cancel
               </button>
-              <button type="button" className="button button--pink">
+              <button
+                type="button"
+                className="button button--pink"
+                onClick={props.handler}
+              >
                 Save
               </button>
             </div>
