@@ -7,19 +7,21 @@ class Article extends Component {
     const page = props.page;
     console.log(page);
   }
-  
 
   render() {
-
     let text = this.props.article.content;
     let spliced = text.substring(0, text.length / 2);
     let firstParagraph;
-    if (text.charAt(spliced.length - 1) === '!' || text.charAt(spliced.length - 1) === '.' || text.charAt(spliced.length - 1) === '?') {
-        firstParagraph = text.substring(0, text.length / 2);
+    if (
+      text.charAt(spliced.length - 1) === "!" ||
+      text.charAt(spliced.length - 1) === "." ||
+      text.charAt(spliced.length - 1) === "?"
+    ) {
+      firstParagraph = text.substring(0, text.length / 2);
     } else {
-        firstParagraph = text.substring(0, spliced.lastIndexOf('.') + 1);
+      firstParagraph = text.substring(0, spliced.lastIndexOf(".") + 1);
     }
-    let secondParagraph = text.substring(spliced.lastIndexOf('.') + 1);
+    let secondParagraph = text.substring(spliced.lastIndexOf(".") + 1);
 
     return (
       <div id={this.props.article.id}>
@@ -28,27 +30,39 @@ class Article extends Component {
           <li className="info__item">{this.props.article.tag}</li>
           <li className="info__item">
             Added by
-            <span className="info__mark point"> {this.props.article.author}</span>
+            <span className="info__mark point">
+              {" "}
+              {this.props.article.author}
+            </span>
           </li>
           <li className="info__item">{this.props.article.date}</li>
         </ul>
-        
+
         <div className="actions__container">
-          {this.props.page === "home" &&
+          {this.props.page === "home" && (
             <>
               <button
-              type="button"
-              className="actions__btn border"
-              id={this.props.article.id}
+                type="button"
+                className="actions__btn border"
+                id={this.props.article.id}
+                onClick={() => this.props.editArticle(this.props.id)}
               >
                 Edit
               </button>
-              <button type="button" className="actions__btn" id={this.props.article.id}>
+              <button
+                type="button"
+                className="actions__btn"
+                id={this.props.article.id}
+                onClick={() => this.props.deleteArticle(this.props.article.id)}
+              >
                 Delete
               </button>
             </>
-          }
-          <img src={this.props.article.imgUrl} alt={this.props.article.imgAlt}></img>
+          )}
+          <img
+            src={this.props.article.imgUrl}
+            alt={this.props.article.imgAlt}
+          ></img>
           <div className="content__container">
             {this.props.page === "home" ? (
               <p>{this.props.article.content}</p>
@@ -59,9 +73,8 @@ class Article extends Component {
                 <p>{secondParagraph}</p>
               </>
             )}
-            
           </div>
-          {this.props.page === "home" &&
+          {this.props.page === "home" && (
             <div className="readmore__container">
               <a className="btn-details" href={"/" + this.props.article.id}>
                 <button type="button" className="button button-details">
@@ -69,8 +82,7 @@ class Article extends Component {
                 </button>
               </a>
             </div>
-          }
-          
+          )}
         </div>
       </div>
     );

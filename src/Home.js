@@ -4,7 +4,6 @@ import NavBar from "./components/NavBar/NavBar.js";
 import AddArticle from "./components/AddArticle/AddArticle";
 import Article from "./components/ArticleComponent/Article";
 import Footer from "./components/Footer/Footer";
-//import Modal from "./components/Modal/Modal";
 
 const getArticles = (self) => {
   fetch("http://localhost:3007/articles?indexStart=0&indexEnd=8").then(
@@ -32,6 +31,7 @@ class Home extends Component {
     console.log(this.state);
     this.handler = this.handler.bind(this);
     this.handlerClose = this.handlerClose.bind(this);
+    this.deleteArticle = this.deleteArticle.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +63,27 @@ class Home extends Component {
     });
   }
 
+  deleteArticle(id) {
+    if (id) {
+      fetch("http://localhost:3007/articles/" + id, { method: "DELETE" }).then(
+        (res) => {
+          if (res.status === 200) {
+            let updatedArticles = this.state.articles.filter(
+              (article) => article.id !== id
+            );
+
+            this.setState({ articles: updatedArticles });
+          }
+        }
+      );
+    }
+  }
+
+  editArticle(id) {
+    if (id) {
+    }
+  }
+
   render() {
     return (
       <>
@@ -80,6 +101,8 @@ class Home extends Component {
               key={article.id}
               id={article.id}
               article={article}
+              deleteArticle={this.deleteArticle}
+              editArticle={this.editArticle}
             ></Article>
           );
         })}
