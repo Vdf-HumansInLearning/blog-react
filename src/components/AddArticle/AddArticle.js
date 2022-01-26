@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "../Modal/Modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 import "./AddArticle.css";
 
 class AddArticle extends Component {
@@ -25,7 +24,7 @@ class AddArticle extends Component {
             className="button open-modal fas fa-plus"
             onClick={() => this.setState({ showModal: true })}
           >
-            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Article
+            Add Article
           </button>
           <Modal modalState={this.state.showModal} handler={this.handler} />
         </div>
