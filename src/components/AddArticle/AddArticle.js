@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Modal from "../Modal/Modal";
-
 import "./AddArticle.css";
 
 class AddArticle extends Component {
@@ -24,7 +23,7 @@ class AddArticle extends Component {
             className="button open-modal fas fa-plus"
             onClick={() => this.setState({ showModal: true })}
           >
-            Add Article
+          Add Article
           </button>
           <Modal modalState={this.state.showModal} handler={this.handler} />
         </div>

@@ -16,6 +16,10 @@ footer.footer {
   font-family: "Montserrat", sans-serif;
 }
 
+.footer a{
+  text-decoration: none;
+}
+
 .footer-details {
   display: flex;
   justify-content: space-between;
