@@ -3,29 +3,21 @@ import Modal from "../Modal/Modal";
 import "./AddArticle.css";
 
 class AddArticle extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { showModal: false };
-    this.handler = this.handler.bind(this);
-  }
-
-  handler() {
-    this.setState({
-      showModal: false,
-    });
-  }
-
   render() {
     return (
       <div id="add-article-button">
         <div className="add__container">
           <button
             className="button open-modal fas fa-plus"
-            onClick={() => this.setState({ showModal: true })}
+            onClick={this.props.handlerClose}
           >
-          Add Article
+            Add Article
           </button>
-          <Modal modalState={this.state.showModal} handler={this.handler} />
+          <Modal
+            modalState={this.props.showModal}
+            handler={this.props.handler}
+            sendDataArticle={this.props.sendDataArticle}
+          />
         </div>
       </div>
     );
