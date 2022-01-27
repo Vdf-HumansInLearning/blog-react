@@ -6,27 +6,16 @@ import Article from "./components/ArticleComponent/Article";
 import Footer from "./components/Footer/Footer";
 import EditModal from "./components/EditModal/EditModal";
 
-const getArticles = (self) => {
-  fetch("http://localhost:3007/articles?indexStart=0&indexEnd=8").then(
-    function (response) {
-      response
-        .json()
-        .then(function (res) {
-          if (response.status === 200) {
-            self.setState({ articles: res.articlesList });
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  );
-};
-
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
       selectedArticleToEdit: {},
+      numberOfArticles: 4,
+      indexStart : 0,
+      indexEnd : 3,
+      totalNumberOfArticles : 0,
       showModal: false,
       showEditModal: false
     };
@@ -39,11 +28,38 @@ class Home extends Component {
     this.sendDataArticle = this.sendDataArticle.bind(this);
     this.sendEditDataArticle = this.sendEditDataArticle.bind(this);
     this.editArticle = this.editArticle.bind(this);
+    this.updateStartEndIndexes = this.updateStartEndIndexes.bind(this);
+    this.handleNext = this.handleNext.bind(this);
+    this.handlePrevious = this.handlePrevious.bind(this);
   }
 
   componentDidMount() {
     const self = this;
-    getArticles(self);
+    this.getArticles(self);
+  }
+
+  getArticles = (self) => {
+    fetch(`http://localhost:3007/articles?indexStart=${this.state.indexStart}&indexEnd=${this.state.indexEnd}`).then(
+      function (response) {
+        response
+          .json()
+          .then(function (res) {
+            if (response.status === 200) {
+              self.setState({ 
+                articles: res.articlesList,
+                totalNumberOfArticles: res.numberOfArticles
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    );
+  };
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.indexStart !== this.state.indexStart) {
+      this.getArticles(this);
+    }
   }
 
   //add article
@@ -58,7 +74,7 @@ class Home extends Component {
       body: JSON.stringify(article),
     }).then((res) => {
       if (res.status === 200) {
-        getArticles(this);
+        this.getArticles(this);
       }
     });
   }
@@ -75,7 +91,7 @@ class Home extends Component {
       body: JSON.stringify(article),
     }).then((res) => {
       if (res.status === 200) {
-        getArticles(this);
+        this.getArticles(this);
       }
     });
   }
@@ -86,7 +102,7 @@ class Home extends Component {
       fetch("http://localhost:3007/articles/" + id, { method: "DELETE" }).then(
         (res) => {
           if (res.status === 200) {
-            getArticles(this);
+            this.getArticles(this);
           }
         }
       );
@@ -131,6 +147,31 @@ class Home extends Component {
     }
   }
 
+  updateStartEndIndexes(button) {
+    if (button === 'next') {
+        this.setState({
+          indexStart: this.state.indexStart + this.state.numberOfArticles,
+          indexEnd: this.state.indexEnd + this.state.numberOfArticles
+        })
+    }
+
+    if (button === 'previous') {
+      this.setState({
+        indexStart: this.state.indexStart - this.state.numberOfArticles,
+        indexEnd: this.state.indexEnd - this.state.numberOfArticles
+      })
+    }
+  }
+
+  handlePrevious() {
+    this.updateStartEndIndexes('previous');
+  }
+
+  handleNext() {
+    console.log("next");
+    this.updateStartEndIndexes('next');
+  }
+
   render() {
     return (
       <>
@@ -154,7 +195,7 @@ class Home extends Component {
             ></Article>
           );
         })}
-        <Footer page="home" />
+        <Footer page="home" handleNext={this.handleNext} handlePrevious={this.handlePrevious} indexStart={this.state.indexStart} indexEnd={this.state.indexEnd} totalNumberOfArticles={this.state.totalNumberOfArticles}/>
 
         <EditModal 
           sendEditDataArticle={this.sendEditDataArticle}

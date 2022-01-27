@@ -2,19 +2,32 @@ import React from "react";
 import "./Footer.css";
 
 function Footer(props) {
+  console.log(props);
   return (
     <div>
       {props.page === "home" ? (
       <footer className="footer next-button-class">
-        <button
-          className="footer__link footer__link--previous"
-          id="button-prev"
-        >
-          previous
-        </button>
-        <button className="footer__link footer__link--next" id="button-next">
-          next
-        </button>
+        {props.indexStart === 0 ? (
+          <div></div>
+        ): (
+          <button
+            className="footer__link footer__link--previous"
+            id="button-prev"
+            onClick={props.handlePrevious}
+          >
+            previous
+          </button>
+        )}
+        {props.indexEnd < props.totalNumberOfArticles - 1 && (
+          <button 
+            className="footer__link footer__link--next" 
+            id="button-next"
+            onClick={props.handleNext}>
+            next
+          </button>
+        )}
+        
+        
       </footer>
       ) : (
       <footer className="footer">
