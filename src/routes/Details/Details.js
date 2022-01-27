@@ -11,7 +11,6 @@ const getArticle = (self) => {
       .then(function (res) {
         if (response.status === 200) {
           self.setState({ article: res });
-          console.log(self.state);
         }
       })
       .catch((err) => console.log(err));

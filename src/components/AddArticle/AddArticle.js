@@ -9,13 +9,13 @@ class AddArticle extends Component {
         <div className="add__container">
           <button
             className="button open-modal fas fa-plus"
-            onClick={this.props.handlerClose}
+            onClick={this.props.handleAddOpen}
           >
             Add Article
           </button>
           <Modal
             modalState={this.props.showModal}
-            handler={this.props.handler}
+            handleAddClose={this.props.handleAddClose}
             sendDataArticle={this.props.sendDataArticle}
           />
         </div>

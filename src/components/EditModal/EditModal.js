@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import "./Modal.css";
+import "./EditModal.css";
 
-class Modal extends Component {
+class EditModal extends Component {
   constructor(props) {
     super(props);
     // const modalState = this.props.modalState;
     this.state = {
+      id: "",
       title: "",
       imgUrl: "",
-      imgAlr: "photo",
+      imgAlr: "",
       content: "",
       tag: "",
       author: "",
@@ -16,6 +17,22 @@ class Modal extends Component {
       saying: "",
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.article && this.props.article !== prevProps.article) {
+       this.setState({
+        id: this.props.article.id,
+        title: this.props.article.title,
+        imgUrl: this.props.article.imgUrl,
+        imgAlr: this.props.article.imgAlr,
+        content: this.props.article.content,
+        tag: this.props.article.tag,
+        author: this.props.article.author,
+        date: this.props.article.date,
+        saying: this.props.article.saying,
+       });
+    }
   }
 
   handleChange(event) {
@@ -31,11 +48,11 @@ class Modal extends Component {
   render() {
     return (
       <>
-        {this.props.modalState ? (
+        {this.props.showEditModal ? (
           <div id="modal-box" className="modal__overlay">
             <div className="add-modal">
               <div className="modal__content">
-                <h2 className="title modal-title">Add/Edit article</h2>
+                <h2 className="title modal-title">Edit article</h2>
                 <div className="inputs__container">
                   <input
                     type="text"
@@ -106,14 +123,14 @@ class Modal extends Component {
                   <button
                     type="button"
                     className="button close-modal"
-                    onClick={this.props.handler}
+                    onClick={this.props.handleEditClose}
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
                     className="button button--pink"
-                    onClick={() => this.props.sendDataArticle(this.state)}
+                    onClick={() => this.props.sendEditDataArticle(this.state)}
                   >
                     Save
                   </button>
@@ -128,4 +145,4 @@ class Modal extends Component {
   }
 }
 
-export default Modal;
+export default EditModal;

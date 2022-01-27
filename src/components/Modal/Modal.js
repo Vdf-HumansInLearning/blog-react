@@ -8,7 +8,7 @@ class Modal extends Component {
     this.state = {
       title: "",
       imgUrl: "",
-      imgAlr: "photo",
+      imgAlr: "",
       content: "",
       tag: "",
       author: "",
@@ -35,7 +35,7 @@ class Modal extends Component {
           <div id="modal-box" className="modal__overlay">
             <div className="add-modal">
               <div className="modal__content">
-                <h2 className="title modal-title">Add/Edit article</h2>
+                <h2 className="title modal-title">Add article</h2>
                 <div className="inputs__container">
                   <input
                     type="text"
@@ -106,7 +106,7 @@ class Modal extends Component {
                   <button
                     type="button"
                     className="button close-modal"
-                    onClick={this.props.handler}
+                    onClick={this.props.handleAddClose}
                   >
                     Cancel
                   </button>

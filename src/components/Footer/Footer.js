@@ -2,7 +2,6 @@ import React from "react";
 import "./Footer.css";
 
 function Footer(props) {
-  console.log(props);
   return (
     <div>
       {props.page === "home" ? (

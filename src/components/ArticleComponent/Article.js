@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import "./Article.css";
 
 class Article extends Component {
-  constructor(props) {
-    super(props);
-    const page = props.page;
-    console.log(page);
-  }
 
   render() {
     let text = this.props.article.content;
@@ -45,7 +40,7 @@ class Article extends Component {
                 type="button"
                 className="actions__btn border"
                 id={this.props.article.id}
-                onClick={() => this.props.editArticle(this.props.id)}
+                onClick={() => this.props.editArticle(this.props.article.id)}
               >
                 Edit
               </button>
