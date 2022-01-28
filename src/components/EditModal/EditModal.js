@@ -44,7 +44,7 @@ class EditModal extends Component {
       [name]: value,
     });
   }
-
+  
   render() {
     return (
       <>

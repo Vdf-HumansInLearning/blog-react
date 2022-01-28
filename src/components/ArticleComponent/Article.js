@@ -7,6 +7,7 @@ class Article extends Component {
     let text = this.props.article.content;
     let spliced = text.substring(0, text.length / 2);
     let firstParagraph;
+    console.log(this.props)
     if (
       text.charAt(spliced.length - 1) === "!" ||
       text.charAt(spliced.length - 1) === "." ||
@@ -48,7 +49,7 @@ class Article extends Component {
                 type="button"
                 className="actions__btn"
                 id={this.props.article.id}
-                onClick={() => this.props.deleteArticle(this.props.article.id)}
+                onClick={() => this.props.openDeleteModal(this.props.article.id)}
               >
                 Delete
               </button>

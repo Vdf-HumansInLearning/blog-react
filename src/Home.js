@@ -5,6 +5,8 @@ import AddArticle from "./components/AddArticle/AddArticle";
 import Article from "./components/ArticleComponent/Article";
 import Footer from "./components/Footer/Footer";
 import EditModal from "./components/EditModal/EditModal";
+import DarkMode from "./components/DarkMode/DarkMode";
+import DeleteModal from "./components/DeleteModal/DeleteModal";
 
 class Home extends Component {
   constructor(props) {
@@ -17,7 +19,10 @@ class Home extends Component {
       indexEnd : 3,
       totalNumberOfArticles : 0,
       showModal: false,
-      showEditModal: false
+      showEditModal: false,
+      theme: false,
+      showDeleteModal: false,
+      idToDelete: ''
     };
     console.log(this.state);
     this.handleAddClose = this.handleAddClose.bind(this);
@@ -31,11 +36,15 @@ class Home extends Component {
     this.updateStartEndIndexes = this.updateStartEndIndexes.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
+    this.switchTheme = this.switchTheme.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
   }
 
   componentDidMount() {
     const self = this;
     this.getArticles(self);
+    localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
   }
 
   getArticles = (self) => {
@@ -59,6 +68,9 @@ class Home extends Component {
   componentDidUpdate(previousProps, previousState) {
     if (previousState.indexStart !== this.state.indexStart) {
       this.getArticles(this);
+    }
+    if (previousState.theme !== this.state.theme){
+      this.state.theme ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
     }
   }
 
@@ -103,6 +115,7 @@ class Home extends Component {
         (res) => {
           if (res.status === 200) {
             this.getArticles(this);
+            this.setState({showDeleteModal: false, idToDelete: ''})
           }
         }
       );
@@ -147,6 +160,14 @@ class Home extends Component {
     }
   }
 
+  openDeleteModal(id){
+    this.setState({showDeleteModal: true, idToDelete: id});
+  }
+
+  closeDeleteModal(){
+    this.setState({showDeleteModal: false, idToDelete: ''});
+  }
+
   updateStartEndIndexes(button) {
     if (button === 'next') {
         this.setState({
@@ -172,9 +193,16 @@ class Home extends Component {
     this.updateStartEndIndexes('next');
   }
 
+  switchTheme = () => {
+    this.setState({theme: !this.state.theme});
+    localStorage.setItem('setTheme', this.state.theme)
+  }
+  
+
   render() {
     return (
-      <>
+      <div>
+        <DarkMode switchTheme={this.switchTheme}/>
         <NavBar />
         <AddArticle
           sendDataArticle={this.sendDataArticle}
@@ -192,6 +220,7 @@ class Home extends Component {
               deleteArticle={this.deleteArticle}
               editArticle={this.editArticle}
               handleEditOpen={this.handleEditOpen}
+              openDeleteModal={this.openDeleteModal}
             ></Article>
           );
         })}
@@ -203,7 +232,13 @@ class Home extends Component {
           handleEditClose={this.handleEditClose}
           article={this.state.selectedArticleToEdit}
           />
-      </>
+        <DeleteModal 
+          showDeleteModal={this.state.showDeleteModal}
+          deleteArticle={this.deleteArticle}
+          closeDeleteModal={this.closeDeleteModal}
+          idToDelete={this.state.idToDelete}
+        />
+      </div>
     );
   }
 }

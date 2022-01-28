@@ -37,15 +37,21 @@ class Modal extends Component {
               <div className="modal__content">
                 <h2 className="title modal-title">Add article</h2>
                 <div className="inputs__container">
-                  <input
-                    type="text"
-                    className="input margin"
-                    id="title"
-                    placeholder="Please enter title"
-                    name="title"
-                    value={this.state.title}
-                    onChange={this.handleChange}
-                  ></input>
+                  <div>
+                    <input
+                      type="text"
+                      className="input margin"
+                      id="title"
+                      placeholder="Please enter title"
+                      name="title"
+                      value={this.state.title}
+                      onChange={this.handleChange}
+                    ></input>
+                    {this.state.title.length > 5 &&
+                    this.state.title.length < 30 ? null : (
+                      <p className='error'>Invalid title</p>
+                    )}
+                  </div>
                   <input
                     type="text"
                     className="input margin"

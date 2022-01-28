@@ -20,12 +20,15 @@ const getArticle = (self) => {
 class Details extends Component {
   constructor(props) {
     super(props);
-    this.state = { article: null };
+    this.state = { 
+      article: null,
+    };
   }
 
   componentDidMount() {
     const self = this;
     getArticle(self);
+    localStorage.getItem('setTheme') ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
   }
 
   render() {
