@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Article.css";
 
 class Article extends Component {
-
   render() {
     let text = this.props.article.content;
     let spliced = text.substring(0, text.length / 2);
@@ -56,7 +55,11 @@ class Article extends Component {
             </>
           )}
           <img
-            src={this.props.article.imgUrl}
+            src={
+              this.props.page === "home"
+                ? this.props.article.imgUrl
+                : "../" + this.props.article.imgUrl
+            }
             alt={this.props.article.imgAlt}
           ></img>
           <div className="content__container">
@@ -72,7 +75,10 @@ class Article extends Component {
           </div>
           {this.props.page === "home" && (
             <div className="readmore__container">
-              <a className="btn-details" href={"/" + this.props.article.id}>
+              <a
+                className="btn-details"
+                href={"/article/" + this.props.article.id}
+              >
                 <button type="button" className="button button-details">
                   Read More
                 </button>

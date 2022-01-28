@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import "./Details.css";
-import NavBar from "../../components/NavBar/NavBar"
+import NavBar from "../../components/NavBar/NavBar";
 import Article from "../../components/ArticleComponent/Article";
 import Footer from "../../components/Footer/Footer";
+import { useParams } from "react-router-dom";
 
 const getArticle = (self) => {
-  fetch("http://localhost:3007/articles" + window.location.pathname).then(function (response) {
+  const { id } = self.props.params;
+
+  fetch("http://localhost:3007/articles/" + id).then(function (response) {
     response
       .json()
       .then(function (res) {
@@ -32,7 +35,7 @@ class Details extends Component {
   }
 
   render() {
-    if(this.state.article){
+    if (this.state.article) {
       return (
         <>
           <NavBar />
@@ -42,14 +45,24 @@ class Details extends Component {
             id={this.state.article.id}
             article={this.state.article}
           />
-          <Footer page="details" prevArticle={this.state.article.prevId} nextArticle={this.state.article.nextId}/>
+          <Footer
+            page="details"
+            prevArticle={this.state.article.prevId}
+            nextArticle={this.state.article.nextId}
+          />
         </>
       );
     } else {
       return null;
     }
-    
   }
 }
 
-export default Details;
+//
+
+const withRouter = (WrappedComponent) => (props) => {
+  const params = useParams();
+  return <WrappedComponent {...props} params={params} />;
+};
+
+export default withRouter(Details);
