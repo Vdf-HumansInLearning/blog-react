@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 
 function NavBar() {
@@ -8,9 +9,9 @@ function NavBar() {
       <ul className="nav__container">
         {navbarMenu.map((item, i) => (
           <li key={i} className="nav__item">
-            <a href="/" className="nav__link">
+            <Link to="/" className="nav__link">
               {item}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

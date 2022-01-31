@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Article.css";
 
 class Article extends Component {
@@ -74,14 +75,14 @@ class Article extends Component {
           </div>
           {this.props.page === "home" && (
             <div className="readmore__container">
-              <a
+              <Link
                 className="btn-details"
-                href={"/article/" + this.props.article.id}
+                to={"/article/" + this.props.article.id}
               >
                 <button type="button" className="button button-details">
                   Read More
                 </button>
-              </a>
+              </Link>
             </div>
           )}
         </div>

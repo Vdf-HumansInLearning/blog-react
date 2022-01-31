@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer(props) {
@@ -30,18 +31,18 @@ function Footer(props) {
       ) : (
         <footer className="footer">
           {props.prevArticle ? (
-            <a href={"/article/" + props.prevArticle}>
+            <Link to={"/article/" + props.prevArticle}>
               <button className="footer__link">previous article</button>
-            </a>
+            </Link>
           ) : (
             <div></div>
           )}
           {props.nextArticle ? (
-            <a href={"/article/" + props.nextArticle}>
+            <Link to={"/article/" + props.nextArticle}>
               <button className="footer__link footer__link--next">
                 next article
               </button>
-            </a>
+            </Link>
           ) : null}
         </footer>
       )}

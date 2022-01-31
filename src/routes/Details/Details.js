@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 
 const getArticle = (self) => {
   const { id } = self.props.params;
-
   fetch("http://localhost:3007/articles/" + id).then(function (response) {
     response
       .json()
@@ -32,6 +31,14 @@ class Details extends Component {
     const self = this;
     getArticle(self);
     localStorage.getItem('setTheme') ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.params.id !== this.props.params.id) {
+      const self = this;
+      getArticle(self);
+      window.scrollTo(0,0);
+    }
   }
 
   render() {
