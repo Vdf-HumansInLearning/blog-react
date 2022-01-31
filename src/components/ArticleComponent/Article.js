@@ -6,7 +6,6 @@ class Article extends Component {
     let text = this.props.article.content;
     let spliced = text.substring(0, text.length / 2);
     let firstParagraph;
-    console.log(this.props)
     if (
       text.charAt(spliced.length - 1) === "!" ||
       text.charAt(spliced.length - 1) === "." ||

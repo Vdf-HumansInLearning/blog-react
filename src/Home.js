@@ -24,7 +24,6 @@ class Home extends Component {
       showDeleteModal: false,
       idToDelete: ''
     };
-    console.log(this.state);
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddOpen = this.handleAddOpen.bind(this);
     this.handleEditClose = this.handleEditClose.bind(this);
