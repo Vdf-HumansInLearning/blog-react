@@ -100,7 +100,17 @@ class Home extends Component {
     }).then((res) => {
       if (res.status === 200) {
         this.getArticles(this);
-        toast.success('🦄 Succesfully added!', {
+        toast.success('🦄 Successfully added!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      } else {
+        toast.error('An error occurred!', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -135,6 +145,16 @@ class Home extends Component {
           draggable: true,
           progress: undefined,
           });
+      } else {
+        toast.error('An error occurred!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       }
     });
   }
@@ -147,7 +167,17 @@ class Home extends Component {
           if (res.status === 200) {
             this.getArticles(this);
             this.setState({ showDeleteModal: false, idToDelete: "" });
-            toast.success('🦄 Succesfully deleted!', {
+            toast.success('🦄 Successfully deleted!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
+          } else {
+            toast.error('An error occurred!', {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
