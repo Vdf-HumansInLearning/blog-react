@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./EditModal.css";
 
 class EditModal extends Component {
   constructor(props) {

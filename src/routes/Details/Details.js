@@ -30,7 +30,12 @@ class Details extends Component {
   componentDidMount() {
     const self = this;
     getArticle(self);
-    localStorage.getItem('setTheme') ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
+
+    if(localStorage.getItem('setTheme')){
+      localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.setAttribute('data-theme', 'light');
+    }
   }
 
   componentDidUpdate(prevProps) {

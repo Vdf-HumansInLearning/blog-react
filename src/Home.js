@@ -20,7 +20,7 @@ class Home extends Component {
       totalNumberOfArticles : 0,
       showModal: false,
       showEditModal: false,
-      theme: false,
+      day: true,
       showDeleteModal: false,
       idToDelete: '',
       refreshInputs: false
@@ -44,7 +44,13 @@ class Home extends Component {
   componentDidMount() {
     const self = this;
     this.getArticles(self);
-    localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
+    // localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
+    if(localStorage.getItem('setTheme')){
+      localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.setAttribute('data-theme', 'light');
+      localStorage.setItem('setTheme', this.state.day)
+    }
   }
 
   getArticles = (self) => {
@@ -69,8 +75,8 @@ class Home extends Component {
     if (previousState.indexStart !== this.state.indexStart) {
       this.getArticles(this);
     }
-    if (previousState.theme !== this.state.theme){
-      this.state.theme ? document.body.setAttribute('data-theme', 'dark') : document.body.setAttribute('data-theme', 'light');
+    if (previousState.day !== this.state.day){
+      this.state.day ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
     }
   }
 
@@ -196,8 +202,7 @@ class Home extends Component {
   }
 
   switchTheme = () => {
-    this.setState({theme: !this.state.theme});
-    localStorage.setItem('setTheme', this.state.theme)
+    this.setState({day: !this.state.day}, () => localStorage.setItem('setTheme', this.state.day));
   }
   
 
