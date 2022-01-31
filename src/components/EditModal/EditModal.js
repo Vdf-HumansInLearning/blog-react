@@ -14,6 +14,7 @@ class EditModal extends Component {
       author: "",
       date: "",
       saying: "",
+      valid: false
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,8 +30,7 @@ class EditModal extends Component {
         tag: this.props.article.tag,
         author: this.props.article.author,
         date: this.props.article.date,
-        saying: this.props.article.saying,
-        valid: true
+        saying: this.props.article.saying
        });
     }
   }
