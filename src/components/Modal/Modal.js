@@ -20,33 +20,43 @@ class Modal extends Component {
     this.isValid = this.isValid.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.refreshInputs !== this.props.refreshInputs){
+      this.setState({
+        title: "",
+        imgUrl: "",
+        imgAlr: "",
+        content: "",
+        tag: "",
+        author: "",
+        date: new Date(),
+        saying: "",
+        valid: true,
+      });
+    }
+  }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    this.isValid();
     this.setState({
       ...this.state,
       [name]: value,
     });
+    this.isValid();
   }
 
   isValid(){
     let {title, imgUrl, content, tag, author, saying } = this.state;
     let regexJpg = /\.(jpe?g|png|gif|bmp)$/i;
     
-    (title.length > 4 && title.length < 30
+    (title.length > 4 && title.length < 100
      && regexJpg.test(imgUrl)
-     && content.length > 0 && content.length < 3000
-     && tag.length > 2 && tag.length < 15
+     && content.length > 30 && content.length < 3000
+     && tag.length > 2 && tag.length < 50
      && author.length > 4 && author.length < 30
      && saying.length < 100) ? this.setState({ valid: false}) : this.setState({ valid: true});
-     console.log((title.length > 4 && title.length < 30
-      && regexJpg.test(imgUrl)
-      && content.length > 0 && content.length < 3000
-      && tag.length > 2 && tag.length < 15
-      && author.length > 4 && author.length < 30
-      && saying.length < 100))
   }
 
   render() {
@@ -70,7 +80,7 @@ class Modal extends Component {
                       onChange={this.handleChange}
                     ></input>
                     {(this.state.title.length > 4 &&
-                    this.state.title.length < 30) || this.state.title === '' ? null : (
+                    this.state.title.length < 100) || this.state.title === '' ? null : (
                       <p className='error'>Invalid title</p>
                     )}
                   </div>
@@ -85,7 +95,7 @@ class Modal extends Component {
                     onChange={this.handleChange}
                   ></input>
                   {(this.state.tag.length > 2 &&
-                    this.state.tag.length < 15) || this.state.tag === '' ? null : (
+                    this.state.tag.length < 50) || this.state.tag === '' ? null : (
                       <p className='error'>Invalid tag</p>
                     )}
                   </div>
@@ -147,20 +157,22 @@ class Modal extends Component {
                     )}
                   </div>
                 </div>
-                <textarea
-                  className="textarea"
-                  id="textarea"
-                  name="content"
-                  cols={28}
-                  rows={7}
-                  placeholder="Please enter content"
-                  value={this.state.content}
-                  onChange={this.handleChange}
-                ></textarea>
-                {(this.state.content.length > 0 &&
-                    this.state.content.length < 3000) || this.state.content === '' ? null : (
-                      <p className='error'>Invalid content</p>
-                    )}
+                <div className="textarea">
+                  <textarea
+                    className="textarea"
+                    id="textarea"
+                    name="content"
+                    cols={28}
+                    rows={7}
+                    placeholder="Please enter content"
+                    value={this.state.content}
+                    onChange={this.handleChange}
+                  ></textarea>
+                  {(this.state.content.length > 30 &&
+                      this.state.content.length < 3000) || this.state.content === '' ? null : (
+                        <p className='error'>Invalid content</p>
+                      )}
+                </div>
                 <div className="modal__buttons">
                   <button
                     type="button"
@@ -168,15 +180,26 @@ class Modal extends Component {
                     onClick={this.props.handleAddClose}
                   >
                     Cancel
-                  </button>                  
-                  <button
-                    type="button"
-                    className="button button--pink"
-                    disabled = {this.state.valid.toString() ? "true" : "false"}
-                    onClick={() => this.props.sendDataArticle(this.state)}
-                  >
-                    Save
-                  </button>
+                  </button>  
+                  {this.state.valid ? (
+                    <button
+                      type="button"
+                      className="button button--disabled"
+                      disabled
+                      onClick={() => this.props.sendDataArticle(this.state)}
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="button button--pink"
+                      onClick={() => this.props.sendDataArticle(this.state)}
+                    >
+                      Save
+                    </button>
+                  )}                
+                  
                 </div>
               </div>
               <div id="error-modal"></div>

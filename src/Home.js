@@ -22,7 +22,8 @@ class Home extends Component {
       showEditModal: false,
       theme: false,
       showDeleteModal: false,
-      idToDelete: ''
+      idToDelete: '',
+      refreshInputs: false
     };
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddOpen = this.handleAddOpen.bind(this);
@@ -125,6 +126,7 @@ class Home extends Component {
   handleAddClose() {
     this.setState({
       showModal: false,
+      refreshInputs: true
     });
   }
 
@@ -132,6 +134,7 @@ class Home extends Component {
   handleAddOpen() {
     this.setState({
       showModal: true,
+      refreshInputs: false
     });
   }
 
@@ -206,6 +209,7 @@ class Home extends Component {
         <AddArticle
           sendDataArticle={this.sendDataArticle}
           showModal={this.state.showModal}
+          refreshInputs={this.state.refreshInputs}
           handleAddClose={this.handleAddClose}
           handleAddOpen={this.handleAddOpen}
         />

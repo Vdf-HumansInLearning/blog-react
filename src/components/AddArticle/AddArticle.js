@@ -17,6 +17,7 @@ class AddArticle extends Component {
             modalState={this.props.showModal}
             handleAddClose={this.props.handleAddClose}
             sendDataArticle={this.props.sendDataArticle}
+            refreshInputs={this.props.refreshInputs}
           />
         </div>
       </div>
