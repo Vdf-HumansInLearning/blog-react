@@ -69,6 +69,10 @@ class Home extends Component {
             self.setState({
               articles: res.articlesList,
               totalNumberOfArticles: res.numberOfArticles,
+            }, () => {
+              if(res.articlesList.length === 0){
+                self.handlePrevious();
+              }
             });
           }
         })
@@ -79,6 +83,7 @@ class Home extends Component {
   componentDidUpdate(previousProps, previousState) {
     if (previousState.indexStart !== this.state.indexStart) {
       this.getArticles(this);
+      window.scrollTo(0,0);
     }
     if (previousState.day !== this.state.day) {
       this.state.day
