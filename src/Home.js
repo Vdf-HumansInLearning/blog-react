@@ -8,6 +8,9 @@ import EditModal from "./components/EditModal/EditModal";
 import DarkMode from "./components/DarkMode/DarkMode";
 import DeleteModal from "./components/DeleteModal/DeleteModal";
 
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -15,15 +18,15 @@ class Home extends Component {
       articles: [],
       selectedArticleToEdit: {},
       numberOfArticles: 4,
-      indexStart : 0,
-      indexEnd : 3,
-      totalNumberOfArticles : 0,
+      indexStart: 0,
+      indexEnd: 3,
+      totalNumberOfArticles: 0,
       showModal: false,
       showEditModal: false,
       day: true,
       showDeleteModal: false,
-      idToDelete: '',
-      refreshInputs: false
+      idToDelete: "",
+      refreshInputs: false,
     };
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddOpen = this.handleAddOpen.bind(this);
@@ -45,38 +48,42 @@ class Home extends Component {
     const self = this;
     this.getArticles(self);
     // localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
-    if(localStorage.getItem('setTheme')){
-      localStorage.getItem('setTheme') === 'true' ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
+    if (localStorage.getItem("setTheme")) {
+      localStorage.getItem("setTheme") === "true"
+        ? document.body.setAttribute("data-theme", "light")
+        : document.body.setAttribute("data-theme", "dark");
     } else {
-      document.body.setAttribute('data-theme', 'light');
-      localStorage.setItem('setTheme', this.state.day)
+      document.body.setAttribute("data-theme", "light");
+      localStorage.setItem("setTheme", this.state.day);
     }
   }
 
   getArticles = (self) => {
-    fetch(`http://localhost:3007/articles?indexStart=${this.state.indexStart}&indexEnd=${this.state.indexEnd}`).then(
-      function (response) {
-        response
-          .json()
-          .then(function (res) {
-            if (response.status === 200) {
-              self.setState({ 
-                articles: res.articlesList,
-                totalNumberOfArticles: res.numberOfArticles
-              });
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    );
+    fetch(
+      `http://localhost:3007/articles?indexStart=${this.state.indexStart}&indexEnd=${this.state.indexEnd}`
+    ).then(function (response) {
+      response
+        .json()
+        .then(function (res) {
+          if (response.status === 200) {
+            self.setState({
+              articles: res.articlesList,
+              totalNumberOfArticles: res.numberOfArticles,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    });
   };
 
   componentDidUpdate(previousProps, previousState) {
     if (previousState.indexStart !== this.state.indexStart) {
       this.getArticles(this);
     }
-    if (previousState.day !== this.state.day){
-      this.state.day ? document.body.setAttribute('data-theme', 'light') : document.body.setAttribute('data-theme', 'dark');
+    if (previousState.day !== this.state.day) {
+      this.state.day
+        ? document.body.setAttribute("data-theme", "light")
+        : document.body.setAttribute("data-theme", "dark");
     }
   }
 
@@ -93,6 +100,15 @@ class Home extends Component {
     }).then((res) => {
       if (res.status === 200) {
         this.getArticles(this);
+        toast.success('🦄 Succesfully added!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       }
     });
   }
@@ -110,6 +126,15 @@ class Home extends Component {
     }).then((res) => {
       if (res.status === 200) {
         this.getArticles(this);
+        toast.success('🦄 Succesfully edited!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       }
     });
   }
@@ -121,7 +146,16 @@ class Home extends Component {
         (res) => {
           if (res.status === 200) {
             this.getArticles(this);
-            this.setState({showDeleteModal: false, idToDelete: ''})
+            this.setState({ showDeleteModal: false, idToDelete: "" });
+            toast.success('🦄 Succesfully deleted!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
           }
         }
       );
@@ -132,7 +166,7 @@ class Home extends Component {
   handleAddClose() {
     this.setState({
       showModal: false,
-      refreshInputs: true
+      refreshInputs: true,
     });
   }
 
@@ -140,7 +174,7 @@ class Home extends Component {
   handleAddOpen() {
     this.setState({
       showModal: true,
-      refreshInputs: false
+      refreshInputs: false,
     });
   }
 
@@ -163,89 +197,117 @@ class Home extends Component {
     if (id) {
       this.handleEditOpen();
       this.setState({
-        selectedArticleToEdit: this.state.articles.find(item => item.id === id)
+        selectedArticleToEdit: this.state.articles.find(
+          (item) => item.id === id
+        ),
       });
     }
   }
 
-  openDeleteModal(id){
-    this.setState({showDeleteModal: true, idToDelete: id});
+  openDeleteModal(id) {
+    this.setState({ showDeleteModal: true, idToDelete: id });
   }
 
-  closeDeleteModal(){
-    this.setState({showDeleteModal: false, idToDelete: ''});
+  closeDeleteModal() {
+    this.setState({ showDeleteModal: false, idToDelete: "" });
   }
 
   updateStartEndIndexes(button) {
-    if (button === 'next') {
-        this.setState({
-          indexStart: this.state.indexStart + this.state.numberOfArticles,
-          indexEnd: this.state.indexEnd + this.state.numberOfArticles
-        })
+    if (button === "next") {
+      this.setState({
+        indexStart: this.state.indexStart + this.state.numberOfArticles,
+        indexEnd: this.state.indexEnd + this.state.numberOfArticles,
+      });
     }
 
-    if (button === 'previous') {
+    if (button === "previous") {
       this.setState({
         indexStart: this.state.indexStart - this.state.numberOfArticles,
-        indexEnd: this.state.indexEnd - this.state.numberOfArticles
-      })
+        indexEnd: this.state.indexEnd - this.state.numberOfArticles,
+      });
     }
   }
 
   handlePrevious() {
-    this.updateStartEndIndexes('previous');
+    this.updateStartEndIndexes("previous");
   }
 
   handleNext() {
     console.log("next");
-    this.updateStartEndIndexes('next');
+    this.updateStartEndIndexes("next");
   }
 
   switchTheme = () => {
-    this.setState({day: !this.state.day}, () => localStorage.setItem('setTheme', this.state.day));
-  }
-  
+    this.setState({ day: !this.state.day }, () =>
+      localStorage.setItem("setTheme", this.state.day)
+    );
+  };
 
   render() {
     return (
       <div>
-        <DarkMode switchTheme={this.switchTheme}/>
+        <DarkMode switchTheme={this.switchTheme} />
         <NavBar />
-        <AddArticle
-          sendDataArticle={this.sendDataArticle}
-          showModal={this.state.showModal}
-          refreshInputs={this.state.refreshInputs}
-          handleAddClose={this.handleAddClose}
-          handleAddOpen={this.handleAddOpen}
-        />
-        {this.state.articles.map((article) => {
-          return (
-            <Article
-              page="home"
-              key={article.id}
-              id={article.id}
-              article={article}
-              deleteArticle={this.deleteArticle}
-              editArticle={this.editArticle}
-              handleEditOpen={this.handleEditOpen}
-              openDeleteModal={this.openDeleteModal}
-            ></Article>
-          );
-        })}
-        <Footer page="home" handleNext={this.handleNext} handlePrevious={this.handlePrevious} indexStart={this.state.indexStart} indexEnd={this.state.indexEnd} totalNumberOfArticles={this.state.totalNumberOfArticles}/>
 
-        <EditModal 
-          sendEditDataArticle={this.sendEditDataArticle}
-          showEditModal={this.state.showEditModal}
-          handleEditClose={this.handleEditClose}
-          article={this.state.selectedArticleToEdit}
-          />
-        <DeleteModal 
-          showDeleteModal={this.state.showDeleteModal}
-          deleteArticle={this.deleteArticle}
-          closeDeleteModal={this.closeDeleteModal}
-          idToDelete={this.state.idToDelete}
-        />
+        {this.state.articles.length === 0 ? (
+          <h1 className="text-center">Loading...</h1>
+        ) : (
+          <>
+            <AddArticle
+              sendDataArticle={this.sendDataArticle}
+              showModal={this.state.showModal}
+              refreshInputs={this.state.refreshInputs}
+              handleAddClose={this.handleAddClose}
+              handleAddOpen={this.handleAddOpen}
+            />
+            {this.state.articles.map((article) => {
+              return (
+                <Article
+                  page="home"
+                  key={article.id}
+                  id={article.id}
+                  article={article}
+                  deleteArticle={this.deleteArticle}
+                  editArticle={this.editArticle}
+                  handleEditOpen={this.handleEditOpen}
+                  openDeleteModal={this.openDeleteModal}
+                ></Article>
+              );
+            })}
+            <Footer
+              page="home"
+              handleNext={this.handleNext}
+              handlePrevious={this.handlePrevious}
+              indexStart={this.state.indexStart}
+              indexEnd={this.state.indexEnd}
+              totalNumberOfArticles={this.state.totalNumberOfArticles}
+            />
+
+            <EditModal
+              sendEditDataArticle={this.sendEditDataArticle}
+              showEditModal={this.state.showEditModal}
+              handleEditClose={this.handleEditClose}
+              article={this.state.selectedArticleToEdit}
+            />
+            <DeleteModal
+              showDeleteModal={this.state.showDeleteModal}
+              deleteArticle={this.deleteArticle}
+              closeDeleteModal={this.closeDeleteModal}
+              idToDelete={this.state.idToDelete}
+            />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+          </>
+        )}
       </div>
     );
   }

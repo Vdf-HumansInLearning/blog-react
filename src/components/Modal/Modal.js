@@ -4,7 +4,12 @@ import "./Modal.css";
 class Modal extends Component {
   constructor(props) {
     super(props);
-    // const modalState = this.props.modalState;
+    
+    let today = new Date();
+
+    let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
+
+
     this.state = {
       title: "",
       imgUrl: "",
@@ -12,7 +17,7 @@ class Modal extends Component {
       content: "",
       tag: "",
       author: "",
-      date: new Date(),
+      date: date,
       saying: "",
       valid: true,
     };
@@ -21,6 +26,10 @@ class Modal extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    let today = new Date();
+
+    let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
+
     if(prevProps.refreshInputs !== this.props.refreshInputs){
       this.setState({
         title: "",
@@ -29,7 +38,7 @@ class Modal extends Component {
         content: "",
         tag: "",
         author: "",
-        date: new Date(),
+        date: date,
         saying: "",
         valid: true,
       });
@@ -43,8 +52,7 @@ class Modal extends Component {
     this.setState({
       ...this.state,
       [name]: value,
-    });
-    this.isValid();
+    }, this.isValid);
   }
 
   isValid(){

@@ -42,8 +42,7 @@ class EditModal extends Component {
     this.setState({
       ...this.state,
       [name]: value,
-    });
-    this.isValid();
+    }, this.isValid);
   }
 
   isValid(){

@@ -31,6 +31,12 @@ body {
   background-color: var(--bg-color);
 }
 
+.text-center {
+  text-align: center;
+  font-family: 'Montserrat';
+  color: var(--secondary-color-font);
+}
+
 #root {
   width: 1280px;
   margin: 0px auto;
