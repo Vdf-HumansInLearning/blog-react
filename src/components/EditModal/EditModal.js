@@ -60,6 +60,7 @@ const EditModal = ({
   }
 
   let regexJpg = /\.(jpe?g|png|gif|bmp)$/i;
+
   return (
     <>
       {showEditModal ? (
