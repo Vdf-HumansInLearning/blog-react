@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-function NavBar() {
+const NavBar = () => {
   const navbarMenu = ["Travel Updates", "Reviews", "About", "Contact"];
   return (
     <nav className="nav">
@@ -17,6 +17,6 @@ function NavBar() {
       </ul>
     </nav>
   );
-}
+};
 
 export default NavBar;
