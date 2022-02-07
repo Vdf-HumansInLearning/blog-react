@@ -31,17 +31,17 @@ const EditModal = ({
     valid: valid,
   };
 
-  // useEffect(() => {
-  //   setId(article.id);
-  //   setTitle(article.title);
-  //   setImgUrl(article.imgUrl);
-  //   setImgAlt(article.imgAlr);
-  //   setContent(article.content);
-  //   setTag(article.tag);
-  //   setAuthor(article.author);
-  //   setDate(article.date);
-  //   setSaying(article.saying);
-  // }, [article]);
+  useEffect(() => {
+    setId(article.id);
+    setTitle(article.title);
+    setImgUrl(article.imgUrl);
+    setImgAlt(article.imgAlr);
+    setContent(article.content);
+    setTag(article.tag);
+    setAuthor(article.author);
+    setDate(article.date);
+    setSaying(article.saying);
+  }, [article]);
 
   function isValid() {
     let regexJpg = /\.(jpe?g|png|gif|bmp)$/i;
@@ -55,8 +55,8 @@ const EditModal = ({
     author.length > 4 &&
     author.length < 30 &&
     saying.length < 100
-      ? setValid({ valid: false })
-      : setValid({ valid: true });
+      ? setValid(false)
+      : setValid(true);
   }
 
   let regexJpg = /\.(jpe?g|png|gif|bmp)$/i;
