@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
-  const [selectedArticleToEdit, setSelectedArticleToEdit] = useState({});
+  const [selectedArticleToEdit, setSelectedArticleToEdit] = useState(null);
   const [numberOfArticles] = useState(4);
   const [indexStart, setIndexStart] = useState(0);
   const [indexEnd, setIndexEnd] = useState(3);
@@ -188,7 +188,8 @@ const Home = () => {
   const editArticle = (id) => {
     if (id) {
       handleEditOpen();
-      setSelectedArticleToEdit(articles.find((item) => item.id === id));
+      const articleToEdit = articles.find((item) => item.id === id);
+      setSelectedArticleToEdit(articleToEdit);
     }
   };
 
@@ -226,7 +227,6 @@ const Home = () => {
     setDay(!day);
     localStorage.setItem("setTheme", day);
   };
-
   return (
     <div>
       <DarkMode switchTheme={switchTheme} />
